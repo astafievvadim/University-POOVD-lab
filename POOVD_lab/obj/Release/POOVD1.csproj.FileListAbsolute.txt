@@ -1,0 +1,22 @@
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\bin\Release\UsersGraphics.exe.config
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\bin\Release\UsersGraphics.exe
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\bin\Release\UsersGraphics.pdb
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Release\POOVD1.csproj.AssemblyReference.cache
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Release\POOVD1.csproj.SuggestedBindingRedirects.cache
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Release\UsersGraphics.Form1.resources
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Release\UsersGraphics.Properties.Resources.resources
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Release\POOVD1.csproj.GenerateResource.cache
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Release\POOVD1.csproj.CoreCompileInputs.cache
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Release\UsersGraphics.exe
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Release\UsersGraphics.pdb
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\POOVD1.csproj.AssemblyReference.cache
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\POOVD1.csproj.SuggestedBindingRedirects.cache
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\UsersGraphics.Form1.resources
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\POOVD1.csproj.GenerateResource.cache
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\POOVD1.csproj.CoreCompileInputs.cache
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\bin\Release\POOVD_lab.exe.config
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\bin\Release\POOVD_lab.exe
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\bin\Release\POOVD_lab.pdb
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\POOVD_lab.Properties.Resources.resources
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\POOVD_lab.exe
+C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\POOVD_lab.pdb

@@ -1,0 +1,43 @@
+S:\OneDrive\Рабочий стол\3 курс\Программное обеспечение обработки визуальных данных\Лр №1\UsersGraphics\UsersGraphics\bin\Debug\UsersGraphics.exe.config
+S:\OneDrive\Рабочий стол\3 курс\Программное обеспечение обработки визуальных данных\Лр №1\UsersGraphics\UsersGraphics\bin\Debug\UsersGraphics.exe
+S:\OneDrive\Рабочий стол\3 курс\Программное обеспечение обработки визуальных данных\Лр №1\UsersGraphics\UsersGraphics\bin\Debug\UsersGraphics.pdb
+S:\OneDrive\Рабочий стол\3 курс\Программное обеспечение обработки визуальных данных\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.csproj.AssemblyReference.cache
+S:\OneDrive\Рабочий стол\3 курс\Программное обеспечение обработки визуальных данных\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.Form1.resources
+S:\OneDrive\Рабочий стол\3 курс\Программное обеспечение обработки визуальных данных\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.Properties.Resources.resources
+S:\OneDrive\Рабочий стол\3 курс\Программное обеспечение обработки визуальных данных\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.csproj.GenerateResource.cache
+S:\OneDrive\Рабочий стол\3 курс\Программное обеспечение обработки визуальных данных\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.csproj.CoreCompileInputs.cache
+S:\OneDrive\Рабочий стол\3 курс\Программное обеспечение обработки визуальных данных\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.exe
+S:\OneDrive\Рабочий стол\3 курс\Программное обеспечение обработки визуальных данных\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.pdb
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\bin\Debug\UsersGraphics.exe.config
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\bin\Debug\UsersGraphics.exe
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\bin\Debug\UsersGraphics.pdb
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.csproj.AssemblyReference.cache
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.Form1.resources
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.Properties.Resources.resources
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.csproj.GenerateResource.cache
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.csproj.CoreCompileInputs.cache
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.exe
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.pdb
+S:\OneDrive\Рабочий стол\3 курс\ПООВД\лабы\Лр №1\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.Form2.resources
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\bin\Debug\UsersGraphics.exe.config
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\bin\Debug\UsersGraphics.exe
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\bin\Debug\UsersGraphics.pdb
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.csproj.AssemblyReference.cache
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.csproj.SuggestedBindingRedirects.cache
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.Form1.resources
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.Properties.Resources.resources
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.csproj.GenerateResource.cache
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.csproj.CoreCompileInputs.cache
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.exe
+C:\Users\gamel\Desktop\UsersGraphics\UsersGraphics\obj\Debug\UsersGraphics.pdb
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Debug\UsersGraphics.csproj.AssemblyReference.cache
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Debug\UsersGraphics.csproj.SuggestedBindingRedirects.cache
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Debug\UsersGraphics.Form1.resources
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Debug\UsersGraphics.Properties.Resources.resources
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Debug\UsersGraphics.csproj.GenerateResource.cache
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Debug\UsersGraphics.csproj.CoreCompileInputs.cache
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Debug\UsersGraphics.exe
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\obj\Debug\UsersGraphics.pdb
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\bin\Debug\UsersGraphics.exe.config
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\bin\Debug\UsersGraphics.exe
+C:\Users\gamel\Desktop\zoom removed\UsersGraphics\bin\Debug\UsersGraphics.pdb
