@@ -53,18 +53,26 @@ namespace UsersGraphics
             try
             {
                 // Чтение изображения из бинарного файла
-                using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
+                // Используем FileStream для более быстрого чтения
+                using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.SequentialScan))
+                using (BinaryReader reader = new BinaryReader(fs))
                 {
+                    // Чтение ширины и высоты
                     width = reader.ReadUInt16();
                     height = reader.ReadUInt16();
+
+                    // Создание двумерного массива для хранения пикселей
                     imageArray = new ushort[height, width];
 
-                    for (int y = 0; y < height; y++)
+                    // Чтение всех пикселей за один раз
+                    byte[] pixelData = reader.ReadBytes(height * width * sizeof(ushort));
+
+                    // Заполнение двумерного массива
+                    for (int i = 0; i < pixelData.Length / sizeof(ushort); i++)
                     {
-                        for (int x = 0; x < width; x++)
-                        {
-                            imageArray[y, x] = reader.ReadUInt16();
-                        }
+                        int y = i / width; // Определение индекса по высоте
+                        int x = i % width; // Определение индекса по ширине
+                        imageArray[y, x] = BitConverter.ToUInt16(pixelData, i * sizeof(ushort));
                     }
                 }
 
@@ -103,7 +111,7 @@ namespace UsersGraphics
                 for (int x = 0; x < width; x++)
                 {
                     byte pixelValue = (byte)(imageArray[y, x] >> shift);
-                    bitmap.SetPixel(y,x, colorsArray[pixelValue]);
+                    bitmap.SetPixel(x, y, colorsArray[pixelValue]);
                 }
             }
             return bitmap;
@@ -154,7 +162,7 @@ namespace UsersGraphics
             {
                 // Изменение положения PictureBox на указанный пиксель
                 int pixelValue = Convert.ToInt32(textBoxPixel.Text);
-                if (pixelValue >= 1 && pixelValue <= 3000)
+                if (pixelValue >= 1 && pixelValue <= width)
                 {
                     pictureBox.Location = new Point(pictureBox.Location.X, -pixelValue);
                 }
@@ -171,7 +179,7 @@ namespace UsersGraphics
             try
             {
                 int stepValue = Convert.ToInt32(scrollStepBox.Text);
-                if (stepValue <= 3000 && stepValue >= 1)
+                if (stepValue <= width && stepValue >= 1)
                 {
                     vScrollBar.Maximum = pictureBox.Image.Height - panelCentral.Height / 2 + 10 + stepValue;
                     vScrollBar.SmallChange = stepValue;
@@ -180,7 +188,7 @@ namespace UsersGraphics
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Введено неверное значение.\nЗначение должно быть от 1 до 3000.\n");
+                MessageBox.Show("Введено неверное значение.\nЗначение должно быть от 1 до width.\n");
                 if (pictureBox.Image.Height == null)
                 {
                     return;
@@ -211,7 +219,7 @@ namespace UsersGraphics
             if (pictureBox.Image != null)
             {
                 labelCoordinate.Text = $"Координаты X: {e.X} Y: {e.Y}";
-                labelColor.Text = $"Яркость: {imageArray[e.Y, e.X] >> shift}";
+                labelColor.Text = $"Яркость: {imageArray[e.Y, e.X]}";
             }
         }
 
@@ -222,4 +230,3 @@ namespace UsersGraphics
     }
 }
 
-        

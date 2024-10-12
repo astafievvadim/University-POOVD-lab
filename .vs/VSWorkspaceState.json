@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\POOVD_lab"
+    "\\POOVD_lab",
+    "\\POOVD_lab\\bin",
+    "\\POOVD_lab\\bin\\Debug",
+    "\\POOVD_lab\\obj"
   ],
-  "SelectedNode": "\\POOVD_lab.sln",
+  "SelectedNode": "\\README.md",
   "PreviewInSolutionExplorer": false
 }
