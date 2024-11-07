@@ -20,3 +20,14 @@ C:\Users\gamel\Desktop\POOVD1\UsersGraphics\bin\Release\POOVD_lab.pdb
 C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\POOVD_lab.Properties.Resources.resources
 C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\POOVD_lab.exe
 C:\Users\gamel\Desktop\POOVD1\UsersGraphics\obj\Release\POOVD_lab.pdb
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\bin\Release\POOVD_lab.exe.config
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\bin\Release\POOVD_lab.exe
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\bin\Release\POOVD_lab.pdb
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\obj\Release\POOVD1.csproj.AssemblyReference.cache
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\obj\Release\POOVD1.csproj.SuggestedBindingRedirects.cache
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\obj\Release\UsersGraphics.Form1.resources
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\obj\Release\POOVD_lab.Properties.Resources.resources
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\obj\Release\POOVD1.csproj.GenerateResource.cache
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\obj\Release\POOVD1.csproj.CoreCompileInputs.cache
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\obj\Release\POOVD_lab.exe
+C:\Users\gamel\Desktop\POOVD_lab\POOVD_lab\obj\Release\POOVD_lab.pdb
