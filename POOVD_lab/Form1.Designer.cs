@@ -53,7 +53,7 @@ namespace UsersGraphics
             this.pictureBoxMini = new System.Windows.Forms.PictureBox();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.checkBoxMini = new System.Windows.Forms.CheckBox();
+            this.checkBoxMiniature = new System.Windows.Forms.CheckBox();
             this.checkBoxNormalize = new System.Windows.Forms.CheckBox();
             this.checkBoxInterpolate = new System.Windows.Forms.CheckBox();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
@@ -294,9 +294,11 @@ namespace UsersGraphics
             // 
             // pictureBoxMini
             // 
+            this.pictureBoxMini.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.pictureBoxMini.Location = new System.Drawing.Point(140, 0);
             this.pictureBoxMini.Name = "pictureBoxMini";
-            this.pictureBoxMini.Size = new System.Drawing.Size(228, 743);
+            this.pictureBoxMini.Size = new System.Drawing.Size(100, 600);
             this.pictureBoxMini.TabIndex = 8;
             this.pictureBoxMini.TabStop = false;
             // 
@@ -318,7 +320,7 @@ namespace UsersGraphics
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.panel1.Controls.Add(this.checkBoxMini);
+            this.panel1.Controls.Add(this.checkBoxMiniature);
             this.panel1.Controls.Add(this.checkBoxNormalize);
             this.panel1.Controls.Add(this.checkBoxInterpolate);
             this.panel1.Controls.Add(this.trackBar1);
@@ -329,16 +331,16 @@ namespace UsersGraphics
             this.panel1.Size = new System.Drawing.Size(614, 743);
             this.panel1.TabIndex = 18;
             // 
-            // checkBoxMini
+            // checkBoxMiniature
             // 
-            this.checkBoxMini.AutoSize = true;
-            this.checkBoxMini.Location = new System.Drawing.Point(445, 494);
-            this.checkBoxMini.Name = "checkBoxMini";
-            this.checkBoxMini.Size = new System.Drawing.Size(147, 17);
-            this.checkBoxMini.TabIndex = 24;
-            this.checkBoxMini.Text = "Обзорное изображение";
-            this.checkBoxMini.UseVisualStyleBackColor = true;
-            this.checkBoxMini.CheckedChanged += new System.EventHandler(this.checkBoxMini_CheckedChanged);
+            this.checkBoxMiniature.AutoSize = true;
+            this.checkBoxMiniature.Location = new System.Drawing.Point(445, 494);
+            this.checkBoxMiniature.Name = "checkBoxMiniature";
+            this.checkBoxMiniature.Size = new System.Drawing.Size(147, 17);
+            this.checkBoxMiniature.TabIndex = 24;
+            this.checkBoxMiniature.Text = "Обзорное изображение";
+            this.checkBoxMiniature.UseVisualStyleBackColor = true;
+            this.checkBoxMiniature.CheckedChanged += new System.EventHandler(this.checkBoxMini_CheckedChanged);
             // 
             // checkBoxNormalize
             // 
@@ -442,7 +444,7 @@ namespace UsersGraphics
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.CheckBox checkBoxMini;
+        private System.Windows.Forms.CheckBox checkBoxMiniature;
         private System.Windows.Forms.PictureBox pictureBoxMini;
     }
 }

@@ -17,19 +17,17 @@ namespace UsersGraphics
         private int height;             // Высота изображения
         private int shift;              // Сдвиг кода цвета
         private Color[] colorsArray;    // Массив цветов
-        private Bitmap displayBitmap;    // Изображение для отображения
-        private Graphics g;             // Объект для рисования на PictureBox
         private int bufferSize = 8192; //Размер буфера для чтения изображения
+        private Bitmap displayBitmap;    // Изображение для отображения
         private Bitmap ZoomBitmap;
-        private Bitmap bitmap_mini;
-        private Graphics graphics_mini;
+        //private Bitmap MiniBitmap;
+        //private Graphics gMain;             // Объект для рисования на PictureBox
+        private Graphics gMini;
         private byte color;
 
         private Pen pen = new Pen(Color.Red, 2);
 
-        //private double k_to_mini;
         private int Xmin, Ymin, Xmax, Ymax, minColor, maxColor, k; // переменные для интерполяции
-
         private double coefficient;
 
         // Конструктор класса Form1
@@ -42,13 +40,15 @@ namespace UsersGraphics
             colorsArray = Enumerable.Range(0, 256)
                                     .Select(i => Color.FromArgb(i, i, i))
                                     .ToArray();
-            trackBar1.Minimum = 0;
+            trackBar1.Minimum = 1;
             trackBar1.Maximum = 4;
             pictureBoxMini.Visible = false;
 
             // Инициализация объекта Graphics для PictureBox
-            g = pictureBox.CreateGraphics();
-            graphics_mini = pictureBoxMini.CreateGraphics();
+            gMain = pictureBox.CreateGraphics();
+            gMini = pictureBoxMini.CreateGraphics();
+
+
         }
 
         // Обработчик события загрузки изображения
@@ -130,76 +130,14 @@ namespace UsersGraphics
             }
         }
 
-        void generateBitmapMini()
-        {
-            double scaleFactor = width / (double)pictureBoxMini.Width;
-            int thumbnailWidth = pictureBoxMini.Width;
-            int thumbnailHeight = (int)(height / scaleFactor);
-
-            if (thumbnailHeight < 600)
-            {
-                pictureBoxMini.Height = thumbnailHeight;
-            }
-            else if (thumbnailHeight > 600)
-            {
-                MessageBox.Show("Не получилось создать обзорное изображение");
-                return;
-            }
-
-            Bitmap thumbnailBitmap = new Bitmap(thumbnailWidth, thumbnailHeight);
-
-            int minBrightness = 255;
-            int maxBrightness = 0;
-            int[][] brightnessValues;
-            brightnessValues = new int[thumbnailHeight][];
-
-            for (int y = 0; y < thumbnailHeight; y++)
-            {
-                brightnessValues[y] = new int[thumbnailWidth];
-                for (int x = 0; x < thumbnailWidth; x++)
-                {
-                    int pixelSum = 0;
-                    int xMax = (int)(x * scaleFactor + scaleFactor);
-                    int yMax = (int)(y * scaleFactor + scaleFactor);
-
-                    for (int pixelX = (int)(x * scaleFactor); pixelX < xMax; pixelX++)
-                    {
-                        for (int pixelY = (int)(y * scaleFactor); pixelY < yMax; pixelY++)
-                        {
-                            pixelSum += imageArray[pixelY, pixelX];
-                        }
-                    }
-
-                    brightnessValues[y][x] = (int)(pixelSum / (scaleFactor * scaleFactor));
-                    if (brightnessValues[y][x] < minBrightness) minBrightness = brightnessValues[y][x];
-                    if (brightnessValues[y][x] > maxBrightness) maxBrightness = brightnessValues[y][x];
-                }
-            }
-
-            double brightnessScale = (maxBrightness - minBrightness) / 255.0;
-
-            byte adjustedColor;
-            for (int x = 0; x < thumbnailWidth; x++)
-            {
-                for (int y = 0; y < thumbnailHeight; y++)
-                {
-                    adjustedColor = (byte)((brightnessValues[y][x] - minBrightness) / brightnessScale);
-                    thumbnailBitmap.SetPixel(x, y, colorsArray[adjustedColor]);
-                }
-            }
-
-            pictureBoxMini.Image = thumbnailBitmap;
-        }
-
-
         private void drawMiniPosition()
         {
 
             pictureBoxMini.Refresh();
-            graphics_mini.DrawLine(pen, 0, 0,
+            gMini.DrawLine(pen, 0, 0,
             pictureBoxMini.Width, 0);
-            graphics_mini.DrawLine(pen, 0, height,
-                pictureBoxMini.Width, height);
+            gMini.DrawLine(pen, 0, height,
+            pictureBoxMini.Width, height);
         }
 
         // создание bitmap для pictureBox
@@ -234,10 +172,6 @@ namespace UsersGraphics
             labelCoordinate.Text = $"Координаты X: {e.X} Y: {e.Y + yOffset}";
             labelColor.Text = "Яркость: наведите курсор на изображение";
         }
-
-        private void panelUp_MouseMove(object sender, MouseEventArgs e) => UpdateMouseMoveLabel(e);
-        private void panelCentral_MouseMove(object sender, MouseEventArgs e) => UpdateMouseMoveLabel(e);
-        private void panelDown_MouseMove(object sender, MouseEventArgs e) => UpdateMouseMoveLabel(e, panelCentral.Height);
 
         // Обработчики событий изменения сдвига кода цвета
         private void UpdateShiftAndImage(int newShift)
@@ -328,52 +262,106 @@ namespace UsersGraphics
                 labelCoordinate.Text = $"Координаты X: {e.X} Y: {e.Y}";
                 labelColor.Text = $"Яркость: {imageArray[e.Y, e.X]}";
 
-                g = pictureBox.CreateGraphics();
-                CreateZoomedBitmap(e.X, e.Y);
+                gMain = pictureBox.CreateGraphics();
+                CreateZoomBitmap(e.X, e.Y);
                 pictureBox.Refresh();
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        void generateBitmapMini()
         {
+            //double scaleFactor = width / (double)pictureBoxMini.Width;
+            double scaleFactor = width / (double)pictureBoxMini.Width;
 
-        }
+            int thumbnailWidth = pictureBoxMini.Width;
+            int thumbnailHeight = (int)(height / scaleFactor);
+            /*
+            if (thumbnailHeight < 600)
+            {
+                pictureBoxMini.Height = thumbnailHeight;
+            }
+            else if (thumbnailHeight > 600)
+            {
+                MessageBox.Show("Не получилось создать обзорное изображение");
+                return;
+            }
+            */
 
-        private void panelCentral_Paint(object sender, PaintEventArgs e)
-        {
+            Bitmap thumbnailBitmap = new Bitmap(thumbnailWidth, thumbnailHeight);
 
-        }
+            int minBrightness = 255;
+            int maxBrightness = 0;
+            int[][] brightnessValues;
+            brightnessValues = new int[thumbnailHeight][];
 
-        private void labelColor_Click(object sender, EventArgs e)
-        {
+            for (int y = 0; y < thumbnailHeight; y++)
+            {
+                brightnessValues[y] = new int[thumbnailWidth];
+                for (int x = 0; x < thumbnailWidth; x++)
+                {
+                    int pixelSum = 0;
+                    int xMax = (int)(x * scaleFactor + scaleFactor);
+                    int yMax = (int)(y * scaleFactor + scaleFactor);
 
+                    for (int pixelX = (int)(x * scaleFactor); pixelX < xMax; pixelX++)
+                    {
+                        for (int pixelY = (int)(y * scaleFactor); pixelY < yMax; pixelY++)
+                        {
+                            pixelSum += imageArray[pixelY, pixelX];
+                        }
+                    }
+
+                    brightnessValues[y][x] = (int)(pixelSum / (scaleFactor * scaleFactor));
+                    if (brightnessValues[y][x] < minBrightness) minBrightness = brightnessValues[y][x];
+                    if (brightnessValues[y][x] > maxBrightness) maxBrightness = brightnessValues[y][x];
+                }
+            }
+
+            double brightnessScale = (maxBrightness - minBrightness) / 255.0;
+
+            byte adjustedColor;
+
+            for (int x = 0; x < thumbnailWidth; x++)
+            {
+                for (int y = 0; y < thumbnailHeight; y++)
+                {
+                    adjustedColor = (byte)((brightnessValues[y][x] - minBrightness) / brightnessScale);
+                    thumbnailBitmap.SetPixel(x, y, colorsArray[adjustedColor]);
+                }
+            }
+
+            pictureBoxMini.Image = thumbnailBitmap;
         }
 
         private void checkBoxMini_CheckedChanged(object sender, EventArgs e)
         {
             if (displayBitmap != null)
             {
-                if (checkBoxMini.Checked)
+                if (checkBoxMiniature.Checked)
                 {
                     pictureBox.Visible = false;
                     vScrollBar.Visible = false;
                     // Отображение миниатюры
                     pictureBoxMini.Visible = true;
-                    int newWidth = width / 4;
-                    int newHeight = height / 4;
-                    ushort[,] overviewImage = new ushort[newWidth, newHeight];
 
-                    for (int y = 0; y < newHeight; y++)
-                        for (int x = 0; x < newWidth; x++)
+                    generateBitmapMini();
+                    /*
+                    int minWidth = width / 4;
+                    int minHeight = height / 4;
+                    ushort[,] miniatureImage = new ushort[minWidth, minHeight];
+
+                    for (int y = 0; y < minHeight; y++)
+                        for (int x = 0; x < minWidth; x++)
                         {
                             for (int y1 = 0; y1 < 4; y1++)
                                 for (int x1 = 0; x1 < 4; x1++)
-                                    overviewImage[x, y] += imageArray[y * 4 + y1, x * 4 + x1];
+                                    miniatureImage[x, y] += imageArray[y * 4 + y1, x * 4 + x1];
 
-                            overviewImage[x, y] /= 16;
+                            miniatureImage[x, y] /= 16;
                         }
-                    pictureBoxMini.Width = newWidth;
-                    pictureBoxMini.Image = CreateMinBitmap(overviewImage, newHeight, newWidth);
+                    pictureBoxMini.Width = minWidth;
+                    pictureBoxMini.Image = CreateMinBitmap(miniatureImage, minHeight, minWidth);
+                    */
                 }
                 else
                 {
@@ -420,10 +408,16 @@ namespace UsersGraphics
 
         }
 
-        private void CreateZoomedBitmap(int LocationX, int LocationY)
+        private void pictureBox_drawRedSquare(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawRectangle(pen, Xmin, Ymin, Xmax-Xmin, Ymax-Ymin);
+
+        }
+
+        public void CreateZoomBitmap(int LocationX, int LocationY)
         {
             // Получаем уровень увеличения из значения ползунка
-            k = trackBar1.Value * 2 + 1;
+            k = trackBar1.Value;
 
             // Рассчитываем расстояние до границы увеличенной области
             int dX = pictureBoxZoom.Width / (k) / 2;
@@ -557,11 +551,24 @@ namespace UsersGraphics
             }
         }
 
-        private void pictureBox_drawRedSquare(object sender, PaintEventArgs e)
+        private void panelUp_MouseMove(object sender, MouseEventArgs e) => UpdateMouseMoveLabel(e);
+        private void panelCentral_MouseMove(object sender, MouseEventArgs e) => UpdateMouseMoveLabel(e);
+        private void panelDown_MouseMove(object sender, MouseEventArgs e) => UpdateMouseMoveLabel(e, panelCentral.Height);
+
+        private void Form1_Load(object sender, EventArgs e)
         {
-                // Рисуем прямоугольник с использованием объекта Graphics из события Paint
-                e.Graphics.DrawRectangle(pen, Xmin, Ymin, Xmax - Xmin, Ymax - Ymin);
-            
+
         }
+
+        private void panelCentral_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void labelColor_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
