@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Windows.Forms.VisualStyles;
+using System.Collections;
+using System.Windows.Forms.DataVisualization.Charting;
 
 // Пространство имен и имя класса
 namespace UsersGraphics
@@ -20,15 +24,28 @@ namespace UsersGraphics
         private int bufferSize = 8192; //Размер буфера для чтения изображения
         private Bitmap displayBitmap;    // Изображение для отображения
         private Bitmap ZoomBitmap;
-        //private Bitmap MiniBitmap;
-        //private Graphics gMain;             // Объект для рисования на PictureBox
-        private Graphics gMini;
+        private Graphics gThumbnail;
         private byte color;
-
+        private byte[] segmentValues;
         private Pen pen = new Pen(Color.Red, 2);
-
-        private int Xmin, Ymin, Xmax, Ymax, minColor, maxColor, k; // переменные для интерполяции
+        private int Xmin, Ymin, Xmax, Ymax;
+        private ushort minColor, maxColor, k;// переменные для интерполяции
         private double coefficient;
+
+        private ushort[] segmentGaps =
+        {
+            0,
+            128,
+            256,
+            384,
+            512,
+            640,
+            768,
+            896,
+            1023
+        };
+
+        private byte[] newColors;
 
         // Конструктор класса Form1
         public Form1()
@@ -42,12 +59,19 @@ namespace UsersGraphics
                                     .ToArray();
             trackBar1.Minimum = 1;
             trackBar1.Maximum = 4;
-            pictureBoxMini.Visible = false;
+            thumbnailPicturebox.Visible = false;
+            segmentValues = new byte[9];
+            segmentValues[0] = 0;
+            gThumbnail = thumbnailPicturebox.CreateGraphics();
 
-            // Инициализация объекта Graphics для PictureBox
-            gMain = pictureBox.CreateGraphics();
-            gMini = pictureBoxMini.CreateGraphics();
 
+            chart1.Series["Brightness"].BorderWidth = 6;
+            chart1.ChartAreas[0].AxisX.Maximum = 1023;
+            chart1.ChartAreas[0].AxisX.Minimum = 0;
+            chart1.ChartAreas[0].AxisY.Maximum = 255;
+            chart1.ChartAreas[0].AxisY.Minimum = 0;
+
+            radioButton3.Checked = true;
 
         }
 
@@ -105,8 +129,8 @@ namespace UsersGraphics
 
                 // Создание и отображение Bitmap изображения
                 displayBitmap = CreateDisplayBitmap();
-                pictureBox.Image = displayBitmap;
-                pictureBox.Size = new Size(width, height);
+                mainPicturebox.Image = displayBitmap;
+                mainPicturebox.Size = new Size(width, height);
 
                 // Отображение информации о файле
                 labelFilePath.Text = Path.GetFileName(filePath);
@@ -117,7 +141,7 @@ namespace UsersGraphics
                 radioButton0.Checked = true;
 
                 // Настройка прокрутки
-                vScrollBar.Maximum = pictureBox.Image.Height - panelCentral.Height / 2 + vScrollBar.LargeChange;
+                vScrollBar.Maximum = mainPicturebox.Image.Height - panelCentral.Height / 2 + vScrollBar.LargeChange;
                 vScrollBar.Minimum = panelCentral.Height / 2;
                 vScrollBar.Value = vScrollBar.Minimum;
                 scrollStepBox.Text = $"{vScrollBar.SmallChange}";
@@ -130,28 +154,46 @@ namespace UsersGraphics
             }
         }
 
-        private void drawMiniPosition()
+        private byte[] createNonLinearColors()
         {
+            byte y1, y2;
+            ushort x1, x2;
+            byte[] colors = new byte[1024];
 
-            pictureBoxMini.Refresh();
-            gMini.DrawLine(pen, 0, 0,
-            pictureBoxMini.Width, 0);
-            gMini.DrawLine(pen, 0, height,
-            pictureBoxMini.Width, height);
+            for (int n = 0; n < segmentGaps.Length-1; n++)
+            {
+                y1 = segmentValues[n];
+                x1 = segmentGaps[n];
+
+                y2 = segmentValues[n + 1];
+                x2 = segmentGaps[n + 1];
+
+                for (ushort x = x1; x < x2; x++)
+                {
+                    colors[x] = (byte)(y1 + ((x - x1) * (y2 - y1)) / (x2 - x1));
+                }
+            }
+
+            return colors;
         }
+ 
 
-        // создание bitmap для pictureBox
+        // создание bitmap для mainPicturebox
         private Bitmap CreateDisplayBitmap()
         {
             Bitmap bitmap = new Bitmap(width, height);
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
+
+                for (int y = 0; y < height; y++)
+                    {
+                    for (int x = 0; x < width; x++)
+                    {
                     byte pixelValue = (byte)(imageArray[y, x] >> shift);
+
                     bitmap.SetPixel(x, y, colorsArray[pixelValue]);
+                    }
                 }
-            }
+            
+
             return bitmap;
         }
 
@@ -160,8 +202,8 @@ namespace UsersGraphics
         {
             // Изменение позиции PictureBox в соответствии с положением полосы прокрутки
             int newY = -Math.Max(vScrollBar.Value, vScrollBar.Minimum) + vScrollBar.Minimum;
-            pictureBox.Location = new Point(pictureBox.Location.X, newY);
-            textBoxPixel.Text = $"{-pictureBox.Location.Y}";
+            mainPicturebox.Location = new Point(mainPicturebox.Location.X, newY);
+            textBoxPixel.Text = $"{-mainPicturebox.Location.Y}";
 
 
         }
@@ -179,7 +221,7 @@ namespace UsersGraphics
             shift = newShift;
             if (imageArray != null)
             {
-                pictureBox.Image = CreateDisplayBitmap();
+                mainPicturebox.Image = CreateDisplayBitmap();
             }
         }
 
@@ -198,13 +240,13 @@ namespace UsersGraphics
             {
                 // Изменение положения PictureBox на указанный пиксель
                 if (Convert.ToInt32(textBoxPixel.Text) >= 0 || Convert.ToInt32(textBoxPixel.Text) <= height - vScrollBar.ClientSize.Height)
-                    pictureBox.Location = new Point(pictureBox.Location.X, -Convert.ToInt32(textBoxPixel.Text));
+                    mainPicturebox.Location = new Point(mainPicturebox.Location.X, -Convert.ToInt32(textBoxPixel.Text));
                 vScrollBar.Value = Math.Max(Convert.ToInt32(textBoxPixel.Text), vScrollBar.Minimum);
             }
             catch
             {
                 MessageBox.Show(" Введено неверное значение.\n Значение должно быть от 0 до " + (height - vScrollBar.ClientSize.Height) + ". ");
-                pictureBox.Location = new Point(pictureBox.Location.X, 0);
+                mainPicturebox.Location = new Point(mainPicturebox.Location.X, 0);
                 vScrollBar.Value = vScrollBar.Minimum;
             }
         }
@@ -217,7 +259,7 @@ namespace UsersGraphics
                 int stepValue = Convert.ToInt32(scrollStepBox.Text);
                 if (stepValue <= width && stepValue >= 1)
                 {
-                    vScrollBar.Maximum = pictureBox.Image.Height - panelCentral.Height / 2 + 10 + stepValue;
+                    vScrollBar.Maximum = mainPicturebox.Image.Height - panelCentral.Height / 2 + 10 + stepValue;
                     vScrollBar.SmallChange = stepValue;
                     vScrollBar.LargeChange = stepValue;
                 }
@@ -225,14 +267,12 @@ namespace UsersGraphics
             catch (Exception ex)
             {
                 MessageBox.Show("Введено неверное значение.\nЗначение должно быть от 1 до " + width + ".");
-                if (pictureBox.Image.Height == null)
-                {
-                    return;
-                }
-                vScrollBar.Maximum = pictureBox.Image.Height - panelCentral.Height / 2 + 10;
-                vScrollBar.SmallChange = 1;
-                vScrollBar.LargeChange = 1;
-                scrollStepBox.Text = "1";
+
+                    vScrollBar.Maximum = mainPicturebox.Image.Height - panelCentral.Height / 2 + 10;
+                    vScrollBar.SmallChange = 1;
+                    vScrollBar.LargeChange = 1;
+                    scrollStepBox.Text = "1";
+
 
             }
         }
@@ -240,13 +280,13 @@ namespace UsersGraphics
         // Обработчик события изменения значения trackBar
         private void trackBar_ValueChanged(object sender, EventArgs e)
         {
-            pictureBox.Invalidate();
+            mainPicturebox.Invalidate();
         }
 
         // Обработчик события покидания мыши PictureBox
         private void pictureBox_MouseLeave(object sender, EventArgs e)
         {
-            pictureBox.Invalidate();
+            mainPicturebox.Invalidate();
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -257,67 +297,53 @@ namespace UsersGraphics
         // Обработчик события перемещения мыши над PictureBox
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            if (pictureBox.Image != null)
+            if (mainPicturebox.Image != null)
             {
                 labelCoordinate.Text = $"Координаты X: {e.X} Y: {e.Y}";
                 labelColor.Text = $"Яркость: {imageArray[e.Y, e.X]}";
 
-                gMain = pictureBox.CreateGraphics();
                 CreateZoomBitmap(e.X, e.Y);
-                pictureBox.Refresh();
+                mainPicturebox.Refresh();
             }
         }
 
-        void generateBitmapMini()
+        void generateThumbnailBitmap()
         {
-            //double scaleFactor = width / (double)pictureBoxMini.Width;
-            double scaleFactor = width / (double)pictureBoxMini.Width;
+            double scaleFactor = width / (double)thumbnailPicturebox.Width;
 
-            int thumbnailWidth = pictureBoxMini.Width;
+            int thumbnailWidth = thumbnailPicturebox.Width;
             int thumbnailHeight = (int)(height / scaleFactor);
-            /*
-            if (thumbnailHeight < 600)
-            {
-                pictureBoxMini.Height = thumbnailHeight;
-            }
-            else if (thumbnailHeight > 600)
-            {
-                MessageBox.Show("Не получилось создать обзорное изображение");
-                return;
-            }
-            */
 
             Bitmap thumbnailBitmap = new Bitmap(thumbnailWidth, thumbnailHeight);
 
-            int minBrightness = 255;
-            int maxBrightness = 0;
-            int[][] brightnessValues;
-            brightnessValues = new int[thumbnailHeight][];
+            byte minBrightness = 255;
+            byte maxBrightness = 0;
+            byte[][] brightnessValues = new byte[thumbnailHeight][];
 
-            for (int y = 0; y < thumbnailHeight; y++)
+            for (short y = 0; y < thumbnailHeight; y++)
             {
-                brightnessValues[y] = new int[thumbnailWidth];
-                for (int x = 0; x < thumbnailWidth; x++)
+                brightnessValues[y] = new byte[thumbnailWidth];
+                for (short x = 0; x < thumbnailWidth; x++)
                 {
                     int pixelSum = 0;
-                    int xMax = (int)(x * scaleFactor + scaleFactor);
-                    int yMax = (int)(y * scaleFactor + scaleFactor);
+                    short xMax = (short)(x * scaleFactor + scaleFactor);
+                    short yMax = (short)(y * scaleFactor + scaleFactor);
 
-                    for (int pixelX = (int)(x * scaleFactor); pixelX < xMax; pixelX++)
+                    for (ushort pixelX = (ushort)(x * scaleFactor); pixelX < xMax; pixelX++)
                     {
-                        for (int pixelY = (int)(y * scaleFactor); pixelY < yMax; pixelY++)
+                        for (ushort pixelY = (ushort)(y * scaleFactor); pixelY < yMax; pixelY++)
                         {
                             pixelSum += imageArray[pixelY, pixelX];
                         }
                     }
 
-                    brightnessValues[y][x] = (int)(pixelSum / (scaleFactor * scaleFactor));
+                    brightnessValues[y][x] = (byte)(pixelSum / (scaleFactor * scaleFactor));
                     if (brightnessValues[y][x] < minBrightness) minBrightness = brightnessValues[y][x];
                     if (brightnessValues[y][x] > maxBrightness) maxBrightness = brightnessValues[y][x];
                 }
             }
 
-            double brightnessScale = (maxBrightness - minBrightness) / 255.0;
+            double brightnessScale =(maxBrightness - minBrightness)/255;
 
             byte adjustedColor;
 
@@ -330,81 +356,36 @@ namespace UsersGraphics
                 }
             }
 
-            pictureBoxMini.Image = thumbnailBitmap;
+            thumbnailPicturebox.Image = thumbnailBitmap;
         }
 
-        private void checkBoxMini_CheckedChanged(object sender, EventArgs e)
+        private void thumbnailCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (displayBitmap != null)
             {
-                if (checkBoxMiniature.Checked)
+                if (thumbnailCheckBox.Checked)
                 {
-                    pictureBox.Visible = false;
+                    mainPicturebox.Visible = false;
                     vScrollBar.Visible = false;
                     // Отображение миниатюры
-                    pictureBoxMini.Visible = true;
+                    thumbnailPicturebox.Visible = true;
 
-                    generateBitmapMini();
-                    /*
-                    int minWidth = width / 4;
-                    int minHeight = height / 4;
-                    ushort[,] miniatureImage = new ushort[minWidth, minHeight];
-
-                    for (int y = 0; y < minHeight; y++)
-                        for (int x = 0; x < minWidth; x++)
-                        {
-                            for (int y1 = 0; y1 < 4; y1++)
-                                for (int x1 = 0; x1 < 4; x1++)
-                                    miniatureImage[x, y] += imageArray[y * 4 + y1, x * 4 + x1];
-
-                            miniatureImage[x, y] /= 16;
-                        }
-                    pictureBoxMini.Width = minWidth;
-                    pictureBoxMini.Image = CreateMinBitmap(miniatureImage, minHeight, minWidth);
-                    */
+                    generateThumbnailBitmap();
                 }
                 else
                 {
                     // Скрытие миниатюры
-                    pictureBoxMini.Visible = false;
-                    pictureBox.Visible = true;
+                    thumbnailPicturebox.Visible = false;
+                    mainPicturebox.Visible = true;
                     vScrollBar.Visible = true;
                 }
             }
-            else MessageBox.Show("Загрузите изображение");
-        }
-
-        private Bitmap CreateMinBitmap(ushort[,] miniImage, int Height, int Width)
-        {
-            int xMin = pictureBoxMini.Width - Width / 2;
-            Bitmap bitmap = new Bitmap(Width, Height);
-            for (int y = 0; y < Height; y++)
-                for (int x = 0; x < Width; x++)
-                {
-                    byte pixelValue = (byte)(miniImage[x, y]);
-                    bitmap.SetPixel(x, y, colorsArray[pixelValue]);
-                }
-
-            return bitmap;
-        }
-
-        private void pictureBox_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
+            else 
+            { 
+                
+                thumbnailCheckBox.Checked = false;
+                MessageBox.Show("Загрузите изображение");
+            }
 
         }
 
@@ -414,26 +395,28 @@ namespace UsersGraphics
 
         }
 
-        public void CreateZoomBitmap(int LocationX, int LocationY)
+        private void CreateZoomBitmap(int LocationX, int LocationY)
         {
             // Получаем уровень увеличения из значения ползунка
-            k = trackBar1.Value;
+            //byte minColor, maxColor, k;
+            k = (ushort)trackBar1.Value;
 
-            // Рассчитываем расстояние до границы увеличенной области
-            int dX = pictureBoxZoom.Width / (k) / 2;
+            // Рассчитываем половину стороны увеличенной области
+            int dX = pictureBoxZoom.Width / (k * 2);
 
             // Вычисляем граничные координаты ограничивающего прямоугольника
-            Xmin = LocationX - dX; Ymin = LocationY - dX;
-            Xmax = LocationX + dX; Ymax = LocationY + dX;
+            Xmin = (short)(LocationX - dX); Ymin = (short)(LocationY - dX);
+            Xmax = (short)(LocationX + dX); Ymax = (short)(LocationY + dX);
 
             // Проверяем и корректируем координаты, чтобы остаться внутри изображения
             if (Xmin < 0) { Xmax -= Xmin; Xmin = 0; }
             if (Ymin < 0) { Ymax -= Ymin; Ymin = 0; }
-            if (Xmax >= width) { Xmin -= Xmax - width; Xmax = width; }
+            if (Xmax >= width) { 
+                Xmin -= Xmax - width; Xmax = width; }
             if (Ymax >= height) { Ymin -= Ymax - height; Ymax = height; }
 
             // Создаем новое изображение (Bitmap) для увеличенной области
-            ZoomBitmap = new Bitmap((Xmax - Xmin + 1) * k, (Ymax - Ymin + 1) * k);
+            ZoomBitmap = new Bitmap((Xmax - Xmin) * k, (Ymax - Ymin) * k);
 
             // Инициализируем минимальное и максимальное значение цвета и коэффициент нормализации
             minColor = imageArray[Ymin, Xmin];
@@ -448,7 +431,7 @@ namespace UsersGraphics
                     if (imageArray[y, x] < minColor) minColor = imageArray[y, x];
                     if (imageArray[y, x] > maxColor) maxColor = imageArray[y, x];
                 }
-                coefficient = (255 / (double)(maxColor - minColor));
+                coefficient =(double)((maxColor - minColor)/(255));
             }
 
             // Если активирована опция билинейной интерполяции и уровень увеличения не равен 1
@@ -466,25 +449,26 @@ namespace UsersGraphics
         private void CreateBilinearZoomedBitmap()
         {
             // Переменные для координат соседних пикселей и их яркостей
-            int x2, y2, I11, I12, I21, I22;
+            ushort x2, y2;
+            int I11, I12, I21, I22;
             double a, b, c, d;
             double step = 1 / (double)k;
 
             // Проходим по всем пикселям в исходном изображении
-            for (int y1 = Ymin; y1 < Ymax - 1; y1++)
+            for (short y1 = (short)Ymin; y1 < Ymax - 1; y1++)
             {
-                for (int x1 = Xmin; x1 < Xmax - 1; x1++)
+                for (short x1 = (short)Xmin; x1 < Xmax - 1; x1++)
                 {
-                    x2 = x1 + 1;
-                    y2 = y1 + 1;
+                    x2 = (ushort)(x1 + 1);
+                    y2 = (ushort)(y1 + 1);
 
                     // Нормализуем яркость крайних пикселей, если опция активирована
                     if (checkBoxNormalize.Checked)
                     {
-                        I11 = (int)((imageArray[y1, x1] - minColor) * coefficient);
-                        I12 = (int)((imageArray[y1, x2] - minColor) * coefficient);
-                        I21 = (int)((imageArray[y2, x1] - minColor) * coefficient);
-                        I22 = (int)((imageArray[y2, x2] - minColor) * coefficient);
+                        I11 = (int)((imageArray[y1, x1] - minColor) / coefficient);
+                        I12 = (int)((imageArray[y1, x2] - minColor) / coefficient);
+                        I21 = (int)((imageArray[y2, x1] - minColor) / coefficient);
+                        I22 = (int)((imageArray[y2, x2] - minColor) / coefficient);
                     }
                     else
                     {
@@ -536,13 +520,13 @@ namespace UsersGraphics
                     }
 
                     // Рассчитываем координаты пикселя в увеличенной области
-                    int startX = (x - Xmin) * k;
-                    int startY = (y - Ymin) * k;
+                    short startX = (short)((x - Xmin) * k);
+                    short startY = (short)((y - Ymin) * k);
 
                     // Устанавливаем цвет для всех пикселей в увеличенной области
-                    for (int kx = startX; kx < startX + k; kx++)
+                    for (short kx = startX; kx < startX + k; kx++)
                     {
-                        for (int ky = startY; ky < startY + k; ky++)
+                        for (short ky = startY; ky < startY + k; ky++)
                         {
                             ZoomBitmap.SetPixel(kx, ky, colorsArray[color]);
                         }
@@ -565,10 +549,117 @@ namespace UsersGraphics
 
         }
 
-        private void labelColor_Click(object sender, EventArgs e)
+        private void segment1_Change(object sender, EventArgs e)
+        {
+            segmentValues[1] = (byte)segment1.Value;
+        }
+
+        private void segment2_Change(object sender, EventArgs e)
+        {
+            segmentValues[2] = (byte)segment2.Value;
+        }
+
+        private void segment3_Change(object sender, EventArgs e)
+        {
+            segmentValues[3] = (byte)segment3.Value;
+        }
+
+        private void segment4_Change(object sender, EventArgs e)
+        {
+            segmentValues[4] = (byte)segment4.Value;
+        }
+
+        private void segment5_Change(object sender, EventArgs e)
+        {
+            segmentValues[5] = (byte)segment5.Value;
+        }
+
+        private void segment6_Change(object sender, EventArgs e)
+        {
+            segmentValues[6] = (byte)segment6.Value;
+        }
+
+        private void segment7_Change(object sender, EventArgs e)
+        {
+            segmentValues[7] = (byte)segment7.Value;
+        }
+
+        private void segment8_Change(object sender, EventArgs e)
+        {
+            segmentValues[8] = (byte)segment8.Value;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            Bitmap bitmap = new Bitmap(width, height);
+            byte[] newColors = createNonLinearColors();
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+
+                    byte pixelValue = newColors[(imageArray[y, x])];
+
+                    bitmap.SetPixel(x, y, colorsArray[pixelValue]);
+                }
+            }
+
+            displayBitmap = bitmap;
+
+            mainPicturebox.Image = displayBitmap;
+            mainPicturebox.Size = new Size(width, height);
+
+            chart1.Series["Brightness"].Points.Clear();
+
+            for (int i = 0; i < segmentGaps.Length; i++)
+            {
+                chart1.Series["Brightness"].Points.AddXY((int)segmentGaps[i], (int)segmentValues[i]);
+            }
+            
+            
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            zoomPanel.Visible = true;
+            brightnessNonLinearPanel.Visible = false;
+        }
+
+        private void label2_Click(object sender, EventArgs e)
         {
 
         }
 
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            zoomPanel.Visible = false;
+            brightnessNonLinearPanel.Visible = true;
+        }
+
+        private void labelColor_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
