@@ -39,8 +39,31 @@ namespace UsersGraphics
             this.labelSize = new System.Windows.Forms.Label();
             this.labelCoordinate = new System.Windows.Forms.Label();
             this.panelCentral = new System.Windows.Forms.Panel();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.brightnessNonLinearPanel = new System.Windows.Forms.Panel();
+            this.segment0label = new System.Windows.Forms.Label();
+            this.segment8label = new System.Windows.Forms.Label();
+            this.segment7label = new System.Windows.Forms.Label();
+            this.segment6label = new System.Windows.Forms.Label();
+            this.segment5label = new System.Windows.Forms.Label();
+            this.segment4label = new System.Windows.Forms.Label();
+            this.segment3label = new System.Windows.Forms.Label();
+            this.segment2label = new System.Windows.Forms.Label();
+            this.segment1label = new System.Windows.Forms.Label();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.segment0 = new System.Windows.Forms.TrackBar();
+            this.segment1 = new System.Windows.Forms.TrackBar();
+            this.segment3 = new System.Windows.Forms.TrackBar();
+            this.segment2 = new System.Windows.Forms.TrackBar();
+            this.segment4 = new System.Windows.Forms.TrackBar();
+            this.segment8 = new System.Windows.Forms.TrackBar();
+            this.segment6 = new System.Windows.Forms.TrackBar();
+            this.segment7 = new System.Windows.Forms.TrackBar();
+            this.segment5 = new System.Windows.Forms.TrackBar();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.panel5 = new System.Windows.Forms.Panel();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.labelShift = new System.Windows.Forms.Label();
@@ -57,35 +80,17 @@ namespace UsersGraphics
             this.thumbnailPicturebox = new System.Windows.Forms.PictureBox();
             this.mainPicturebox = new System.Windows.Forms.PictureBox();
             this.zoomPanel = new System.Windows.Forms.Panel();
-            this.brightnessNonLinearPanel = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.nonLinearBrightness = new System.Windows.Forms.CheckBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.segment1 = new System.Windows.Forms.TrackBar();
-            this.segment3 = new System.Windows.Forms.TrackBar();
-            this.segment2 = new System.Windows.Forms.TrackBar();
-            this.segment4 = new System.Windows.Forms.TrackBar();
-            this.segment8 = new System.Windows.Forms.TrackBar();
-            this.segment6 = new System.Windows.Forms.TrackBar();
-            this.segment7 = new System.Windows.Forms.TrackBar();
-            this.segment5 = new System.Windows.Forms.TrackBar();
             this.thumbnailCheckBox = new System.Windows.Forms.CheckBox();
             this.checkBoxNormalize = new System.Windows.Forms.CheckBox();
             this.checkBoxInterpolate = new System.Windows.Forms.CheckBox();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.pictureBoxZoom = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.panelCentral.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.thumbnailPicturebox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mainPicturebox)).BeginInit();
-            this.zoomPanel.SuspendLayout();
             this.brightnessNonLinearPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.segment0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.segment1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.segment3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.segment2)).BeginInit();
@@ -94,10 +99,14 @@ namespace UsersGraphics
             ((System.ComponentModel.ISupportInitialize)(this.segment6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.segment7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.segment5)).BeginInit();
+            this.panel3.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.thumbnailPicturebox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainPicturebox)).BeginInit();
+            this.zoomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxZoom)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonLoad
@@ -169,19 +178,242 @@ namespace UsersGraphics
             this.panelCentral.Paint += new System.Windows.Forms.PaintEventHandler(this.panelCentral_Paint);
             this.panelCentral.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelCentral_MouseMove);
             // 
-            // radioButton3
+            // brightnessNonLinearPanel
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.radioButton3.Location = new System.Drawing.Point(11, 39);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(79, 20);
-            this.radioButton3.TabIndex = 19;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Яркость";
-            this.radioButton3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            this.brightnessNonLinearPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.brightnessNonLinearPanel.Controls.Add(this.segment0label);
+            this.brightnessNonLinearPanel.Controls.Add(this.segment8label);
+            this.brightnessNonLinearPanel.Controls.Add(this.segment7label);
+            this.brightnessNonLinearPanel.Controls.Add(this.segment6label);
+            this.brightnessNonLinearPanel.Controls.Add(this.segment5label);
+            this.brightnessNonLinearPanel.Controls.Add(this.segment4label);
+            this.brightnessNonLinearPanel.Controls.Add(this.segment3label);
+            this.brightnessNonLinearPanel.Controls.Add(this.segment2label);
+            this.brightnessNonLinearPanel.Controls.Add(this.segment1label);
+            this.brightnessNonLinearPanel.Controls.Add(this.chart1);
+            this.brightnessNonLinearPanel.Controls.Add(this.panel1);
+            this.brightnessNonLinearPanel.Location = new System.Drawing.Point(523, 61);
+            this.brightnessNonLinearPanel.Name = "brightnessNonLinearPanel";
+            this.brightnessNonLinearPanel.Size = new System.Drawing.Size(502, 600);
+            this.brightnessNonLinearPanel.TabIndex = 25;
+            // 
+            // segment0label
+            // 
+            this.segment0label.AutoSize = true;
+            this.segment0label.Location = new System.Drawing.Point(18, 270);
+            this.segment0label.Name = "segment0label";
+            this.segment0label.Size = new System.Drawing.Size(13, 13);
+            this.segment0label.TabIndex = 48;
+            this.segment0label.Text = "0";
+            // 
+            // segment8label
+            // 
+            this.segment8label.AutoSize = true;
+            this.segment8label.Location = new System.Drawing.Point(415, 270);
+            this.segment8label.Name = "segment8label";
+            this.segment8label.Size = new System.Drawing.Size(13, 13);
+            this.segment8label.TabIndex = 47;
+            this.segment8label.Text = "0";
+            // 
+            // segment7label
+            // 
+            this.segment7label.AutoSize = true;
+            this.segment7label.Location = new System.Drawing.Point(364, 270);
+            this.segment7label.Name = "segment7label";
+            this.segment7label.Size = new System.Drawing.Size(13, 13);
+            this.segment7label.TabIndex = 46;
+            this.segment7label.Text = "0";
+            // 
+            // segment6label
+            // 
+            this.segment6label.AutoSize = true;
+            this.segment6label.Location = new System.Drawing.Point(313, 270);
+            this.segment6label.Name = "segment6label";
+            this.segment6label.Size = new System.Drawing.Size(13, 13);
+            this.segment6label.TabIndex = 45;
+            this.segment6label.Text = "0";
+            // 
+            // segment5label
+            // 
+            this.segment5label.AutoSize = true;
+            this.segment5label.Location = new System.Drawing.Point(262, 270);
+            this.segment5label.Name = "segment5label";
+            this.segment5label.Size = new System.Drawing.Size(13, 13);
+            this.segment5label.TabIndex = 44;
+            this.segment5label.Text = "0";
+            // 
+            // segment4label
+            // 
+            this.segment4label.AutoSize = true;
+            this.segment4label.Location = new System.Drawing.Point(211, 270);
+            this.segment4label.Name = "segment4label";
+            this.segment4label.Size = new System.Drawing.Size(13, 13);
+            this.segment4label.TabIndex = 43;
+            this.segment4label.Text = "0";
+            // 
+            // segment3label
+            // 
+            this.segment3label.AutoSize = true;
+            this.segment3label.Location = new System.Drawing.Point(160, 270);
+            this.segment3label.Name = "segment3label";
+            this.segment3label.Size = new System.Drawing.Size(13, 13);
+            this.segment3label.TabIndex = 42;
+            this.segment3label.Text = "0";
+            // 
+            // segment2label
+            // 
+            this.segment2label.AutoSize = true;
+            this.segment2label.Location = new System.Drawing.Point(109, 270);
+            this.segment2label.Name = "segment2label";
+            this.segment2label.Size = new System.Drawing.Size(13, 13);
+            this.segment2label.TabIndex = 41;
+            this.segment2label.Text = "0";
+            // 
+            // segment1label
+            // 
+            this.segment1label.AutoSize = true;
+            this.segment1label.Location = new System.Drawing.Point(58, 270);
+            this.segment1label.Name = "segment1label";
+            this.segment1label.Size = new System.Drawing.Size(13, 13);
+            this.segment1label.TabIndex = 40;
+            this.segment1label.Text = "0";
+            this.segment1label.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.BorderWidth = 5;
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(6, 346);
+            this.chart1.Name = "chart1";
+            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Legend = "Legend1";
+            series1.Name = "Brightness";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(469, 219);
+            this.chart1.TabIndex = 37;
+            this.chart1.Text = "chart1";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.segment0);
+            this.panel1.Controls.Add(this.segment1);
+            this.panel1.Controls.Add(this.segment3);
+            this.panel1.Controls.Add(this.segment2);
+            this.panel1.Controls.Add(this.segment4);
+            this.panel1.Controls.Add(this.segment8);
+            this.panel1.Controls.Add(this.segment6);
+            this.panel1.Controls.Add(this.segment7);
+            this.panel1.Controls.Add(this.segment5);
+            this.panel1.Location = new System.Drawing.Point(6, 29);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(469, 238);
+            this.panel1.TabIndex = 33;
+            // 
+            // segment0
+            // 
+            this.segment0.Location = new System.Drawing.Point(3, 5);
+            this.segment0.Maximum = 255;
+            this.segment0.Name = "segment0";
+            this.segment0.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.segment0.Size = new System.Drawing.Size(45, 226);
+            this.segment0.TabIndex = 33;
+            this.segment0.Scroll += new System.EventHandler(this.segment0_Scroll);
+            // 
+            // segment1
+            // 
+            this.segment1.Location = new System.Drawing.Point(55, 5);
+            this.segment1.Maximum = 255;
+            this.segment1.Name = "segment1";
+            this.segment1.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.segment1.Size = new System.Drawing.Size(45, 226);
+            this.segment1.TabIndex = 25;
+            this.segment1.ValueChanged += new System.EventHandler(this.segment1_Change);
+            // 
+            // segment3
+            // 
+            this.segment3.Location = new System.Drawing.Point(157, 5);
+            this.segment3.Maximum = 255;
+            this.segment3.Name = "segment3";
+            this.segment3.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.segment3.Size = new System.Drawing.Size(45, 226);
+            this.segment3.TabIndex = 32;
+            this.segment3.ValueChanged += new System.EventHandler(this.segment3_Change);
+            // 
+            // segment2
+            // 
+            this.segment2.Location = new System.Drawing.Point(106, 5);
+            this.segment2.Maximum = 255;
+            this.segment2.Name = "segment2";
+            this.segment2.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.segment2.Size = new System.Drawing.Size(45, 226);
+            this.segment2.TabIndex = 26;
+            this.segment2.ValueChanged += new System.EventHandler(this.segment2_Change);
+            // 
+            // segment4
+            // 
+            this.segment4.Location = new System.Drawing.Point(208, 5);
+            this.segment4.Maximum = 255;
+            this.segment4.Name = "segment4";
+            this.segment4.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.segment4.Size = new System.Drawing.Size(45, 226);
+            this.segment4.TabIndex = 31;
+            this.segment4.ValueChanged += new System.EventHandler(this.segment4_Change);
+            // 
+            // segment8
+            // 
+            this.segment8.Location = new System.Drawing.Point(412, 5);
+            this.segment8.Maximum = 255;
+            this.segment8.Name = "segment8";
+            this.segment8.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.segment8.Size = new System.Drawing.Size(45, 226);
+            this.segment8.TabIndex = 27;
+            this.segment8.ValueChanged += new System.EventHandler(this.segment8_Change);
+            // 
+            // segment6
+            // 
+            this.segment6.Location = new System.Drawing.Point(310, 5);
+            this.segment6.Maximum = 255;
+            this.segment6.Name = "segment6";
+            this.segment6.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.segment6.Size = new System.Drawing.Size(45, 226);
+            this.segment6.TabIndex = 30;
+            this.segment6.ValueChanged += new System.EventHandler(this.segment6_Change);
+            // 
+            // segment7
+            // 
+            this.segment7.Location = new System.Drawing.Point(361, 5);
+            this.segment7.Maximum = 255;
+            this.segment7.Name = "segment7";
+            this.segment7.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.segment7.Size = new System.Drawing.Size(45, 226);
+            this.segment7.TabIndex = 28;
+            this.segment7.ValueChanged += new System.EventHandler(this.segment7_Change);
+            // 
+            // segment5
+            // 
+            this.segment5.Location = new System.Drawing.Point(259, 5);
+            this.segment5.Maximum = 255;
+            this.segment5.Name = "segment5";
+            this.segment5.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.segment5.Size = new System.Drawing.Size(45, 226);
+            this.segment5.TabIndex = 29;
+            this.segment5.ValueChanged += new System.EventHandler(this.segment5_Change);
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.radioButton4);
+            this.panel3.Controls.Add(this.label2);
+            this.panel3.Controls.Add(this.radioButton3);
+            this.panel3.Location = new System.Drawing.Point(1034, 61);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(103, 109);
+            this.panel3.TabIndex = 27;
             // 
             // radioButton4
             // 
@@ -196,6 +428,31 @@ namespace UsersGraphics
             this.radioButton4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioButton4.UseVisualStyleBackColor = true;
             this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.7F);
+            this.label2.Location = new System.Drawing.Point(8, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 16);
+            this.label2.TabIndex = 26;
+            this.label2.Text = "Режим";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.radioButton3.Location = new System.Drawing.Point(11, 39);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(79, 20);
+            this.radioButton3.TabIndex = 19;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "Яркость";
+            this.radioButton3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
             // panel5
             // 
@@ -390,134 +647,6 @@ namespace UsersGraphics
             this.zoomPanel.Size = new System.Drawing.Size(502, 600);
             this.zoomPanel.TabIndex = 18;
             // 
-            // brightnessNonLinearPanel
-            // 
-            this.brightnessNonLinearPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.brightnessNonLinearPanel.Controls.Add(this.chart1);
-            this.brightnessNonLinearPanel.Controls.Add(this.button1);
-            this.brightnessNonLinearPanel.Controls.Add(this.nonLinearBrightness);
-            this.brightnessNonLinearPanel.Controls.Add(this.panel1);
-            this.brightnessNonLinearPanel.Location = new System.Drawing.Point(523, 61);
-            this.brightnessNonLinearPanel.Name = "brightnessNonLinearPanel";
-            this.brightnessNonLinearPanel.Size = new System.Drawing.Size(502, 600);
-            this.brightnessNonLinearPanel.TabIndex = 25;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(316, 273);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(159, 23);
-            this.button1.TabIndex = 35;
-            this.button1.Text = "Обновить значения";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // nonLinearBrightness
-            // 
-            this.nonLinearBrightness.AutoSize = true;
-            this.nonLinearBrightness.Location = new System.Drawing.Point(59, 273);
-            this.nonLinearBrightness.Name = "nonLinearBrightness";
-            this.nonLinearBrightness.Size = new System.Drawing.Size(251, 17);
-            this.nonLinearBrightness.TabIndex = 34;
-            this.nonLinearBrightness.Text = "Функциональное преобразование яркостей";
-            this.nonLinearBrightness.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.segment1);
-            this.panel1.Controls.Add(this.segment3);
-            this.panel1.Controls.Add(this.segment2);
-            this.panel1.Controls.Add(this.segment4);
-            this.panel1.Controls.Add(this.segment8);
-            this.panel1.Controls.Add(this.segment6);
-            this.panel1.Controls.Add(this.segment7);
-            this.panel1.Controls.Add(this.segment5);
-            this.panel1.Location = new System.Drawing.Point(58, 29);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(417, 238);
-            this.panel1.TabIndex = 33;
-            // 
-            // segment1
-            // 
-            this.segment1.Location = new System.Drawing.Point(3, 3);
-            this.segment1.Maximum = 255;
-            this.segment1.Name = "segment1";
-            this.segment1.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.segment1.Size = new System.Drawing.Size(45, 226);
-            this.segment1.TabIndex = 25;
-            this.segment1.ValueChanged += new System.EventHandler(this.segment1_Change);
-            // 
-            // segment3
-            // 
-            this.segment3.Location = new System.Drawing.Point(105, 3);
-            this.segment3.Maximum = 255;
-            this.segment3.Name = "segment3";
-            this.segment3.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.segment3.Size = new System.Drawing.Size(45, 226);
-            this.segment3.TabIndex = 32;
-            this.segment3.ValueChanged += new System.EventHandler(this.segment3_Change);
-            // 
-            // segment2
-            // 
-            this.segment2.Location = new System.Drawing.Point(54, 3);
-            this.segment2.Maximum = 255;
-            this.segment2.Name = "segment2";
-            this.segment2.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.segment2.Size = new System.Drawing.Size(45, 226);
-            this.segment2.TabIndex = 26;
-            this.segment2.ValueChanged += new System.EventHandler(this.segment2_Change);
-            // 
-            // segment4
-            // 
-            this.segment4.Location = new System.Drawing.Point(156, 3);
-            this.segment4.Maximum = 255;
-            this.segment4.Name = "segment4";
-            this.segment4.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.segment4.Size = new System.Drawing.Size(45, 226);
-            this.segment4.TabIndex = 31;
-            this.segment4.ValueChanged += new System.EventHandler(this.segment4_Change);
-            // 
-            // segment8
-            // 
-            this.segment8.Location = new System.Drawing.Point(360, 3);
-            this.segment8.Maximum = 255;
-            this.segment8.Name = "segment8";
-            this.segment8.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.segment8.Size = new System.Drawing.Size(45, 226);
-            this.segment8.TabIndex = 27;
-            this.segment8.ValueChanged += new System.EventHandler(this.segment8_Change);
-            // 
-            // segment6
-            // 
-            this.segment6.Location = new System.Drawing.Point(258, 3);
-            this.segment6.Maximum = 255;
-            this.segment6.Name = "segment6";
-            this.segment6.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.segment6.Size = new System.Drawing.Size(45, 226);
-            this.segment6.TabIndex = 30;
-            this.segment6.ValueChanged += new System.EventHandler(this.segment6_Change);
-            // 
-            // segment7
-            // 
-            this.segment7.Location = new System.Drawing.Point(309, 3);
-            this.segment7.Maximum = 255;
-            this.segment7.Name = "segment7";
-            this.segment7.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.segment7.Size = new System.Drawing.Size(45, 226);
-            this.segment7.TabIndex = 28;
-            this.segment7.ValueChanged += new System.EventHandler(this.segment7_Change);
-            // 
-            // segment5
-            // 
-            this.segment5.Location = new System.Drawing.Point(207, 3);
-            this.segment5.Maximum = 255;
-            this.segment5.Name = "segment5";
-            this.segment5.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.segment5.Size = new System.Drawing.Size(45, 226);
-            this.segment5.TabIndex = 29;
-            this.segment5.ValueChanged += new System.EventHandler(this.segment5_Change);
-            // 
             // thumbnailCheckBox
             // 
             this.thumbnailCheckBox.AutoSize = true;
@@ -581,46 +710,6 @@ namespace UsersGraphics
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // chart1
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.BorderWidth = 5;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(59, 303);
-            this.chart1.Name = "chart1";
-            this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.Name = "Brightness";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(416, 262);
-            this.chart1.TabIndex = 37;
-            this.chart1.Text = "chart1";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.7F);
-            this.label2.Location = new System.Drawing.Point(8, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 16);
-            this.label2.TabIndex = 26;
-            this.label2.Text = "Режим";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.radioButton4);
-            this.panel3.Controls.Add(this.label2);
-            this.panel3.Controls.Add(this.radioButton3);
-            this.panel3.Location = new System.Drawing.Point(1034, 61);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(103, 109);
-            this.panel3.TabIndex = 27;
-            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(1141, 658);
@@ -629,17 +718,12 @@ namespace UsersGraphics
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panelCentral.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.thumbnailPicturebox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.mainPicturebox)).EndInit();
-            this.zoomPanel.ResumeLayout(false);
-            this.zoomPanel.PerformLayout();
             this.brightnessNonLinearPanel.ResumeLayout(false);
             this.brightnessNonLinearPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.segment0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.segment1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.segment3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.segment2)).EndInit();
@@ -648,11 +732,17 @@ namespace UsersGraphics
             ((System.ComponentModel.ISupportInitialize)(this.segment6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.segment7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.segment5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxZoom)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.thumbnailPicturebox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mainPicturebox)).EndInit();
+            this.zoomPanel.ResumeLayout(false);
+            this.zoomPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxZoom)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -700,11 +790,19 @@ namespace UsersGraphics
         private System.Windows.Forms.TrackBar segment6;
         private System.Windows.Forms.TrackBar segment7;
         private System.Windows.Forms.TrackBar segment5;
-        private System.Windows.Forms.CheckBox nonLinearBrightness;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label segment8label;
+        private System.Windows.Forms.Label segment7label;
+        private System.Windows.Forms.Label segment6label;
+        private System.Windows.Forms.Label segment5label;
+        private System.Windows.Forms.Label segment4label;
+        private System.Windows.Forms.Label segment3label;
+        private System.Windows.Forms.Label segment2label;
+        private System.Windows.Forms.Label segment1label;
+        private System.Windows.Forms.Label segment0label;
+        private System.Windows.Forms.TrackBar segment0;
     }
 }
 

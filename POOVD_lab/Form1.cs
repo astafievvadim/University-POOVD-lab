@@ -8,6 +8,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Windows.Forms.VisualStyles;
 using System.Collections;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Globalization;
 
 // Пространство имен и имя класса
 namespace UsersGraphics
@@ -26,12 +27,16 @@ namespace UsersGraphics
         private Bitmap ZoomBitmap;
         private Graphics gThumbnail;
         private byte color;
-        private byte[] segmentValues;
+        private byte[] segmentValues = new byte[9];
         private Pen pen = new Pen(Color.Red, 2);
         private int Xmin, Ymin, Xmax, Ymax;
         private ushort minColor, maxColor, k;// переменные для интерполяции
         private double coefficient;
 
+        private bool isZoom = false;
+        private byte[] newColors = new byte[1024]; // Массив обновлённых цветов, полученных нелинейным преобразованием
+
+        //Массив расстояний между сегментами по x
         private ushort[] segmentGaps =
         {
             0,
@@ -44,8 +49,6 @@ namespace UsersGraphics
             896,
             1023
         };
-
-        private byte[] newColors;
 
         // Конструктор класса Form1
         public Form1()
@@ -60,8 +63,6 @@ namespace UsersGraphics
             trackBar1.Minimum = 1;
             trackBar1.Maximum = 4;
             thumbnailPicturebox.Visible = false;
-            segmentValues = new byte[9];
-            segmentValues[0] = 0;
             gThumbnail = thumbnailPicturebox.CreateGraphics();
 
 
@@ -154,30 +155,24 @@ namespace UsersGraphics
             }
         }
 
-        private byte[] createNonLinearColors()
+        // обновление яркостей для конкретного сегмента
+        private void updateNonLinearColors(int m)
         {
             byte y1, y2;
             ushort x1, x2;
-            byte[] colors = new byte[1024];
 
-            for (int n = 0; n < segmentGaps.Length-1; n++)
+            y1 = segmentValues[m];
+            x1 = segmentGaps[m];
+
+            y2 = segmentValues[m + 1];
+            x2 = segmentGaps[m + 1];
+
+            for (ushort x = x1; x < x2; x++)
             {
-                y1 = segmentValues[n];
-                x1 = segmentGaps[n];
-
-                y2 = segmentValues[n + 1];
-                x2 = segmentGaps[n + 1];
-
-                for (ushort x = x1; x < x2; x++)
-                {
-                    colors[x] = (byte)(y1 + ((x - x1) * (y2 - y1)) / (x2 - x1));
-                }
+                newColors[x] = (byte)(y1 + ((x - x1) * (y2 - y1)) / (x2 - x1));
             }
-
-            return colors;
         }
- 
-
+        
         // создание bitmap для mainPicturebox
         private Bitmap CreateDisplayBitmap()
         {
@@ -391,7 +386,10 @@ namespace UsersGraphics
 
         private void pictureBox_drawRedSquare(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawRectangle(pen, Xmin, Ymin, Xmax-Xmin, Ymax-Ymin);
+            if (isZoom) {
+                e.Graphics.DrawRectangle(pen, Xmin, Ymin, Xmax - Xmin, Ymax - Ymin);
+            }
+
 
         }
 
@@ -552,64 +550,99 @@ namespace UsersGraphics
         private void segment1_Change(object sender, EventArgs e)
         {
             segmentValues[1] = (byte)segment1.Value;
+            segment1label.Text = segment1.Value.ToString();
+            updateNonLinearColors(0);
+            updateNonLinearColors(1);
+            UpdateNonLinearBrightness();
         }
 
         private void segment2_Change(object sender, EventArgs e)
         {
             segmentValues[2] = (byte)segment2.Value;
+            segment2label.Text = segment2.Value.ToString();
+            updateNonLinearColors(1);
+            updateNonLinearColors(2);
+            UpdateNonLinearBrightness();
         }
 
         private void segment3_Change(object sender, EventArgs e)
         {
             segmentValues[3] = (byte)segment3.Value;
+            segment3label.Text = segment3.Value.ToString();
+            updateNonLinearColors(2);
+            updateNonLinearColors(3);
+            UpdateNonLinearBrightness();
         }
 
         private void segment4_Change(object sender, EventArgs e)
         {
             segmentValues[4] = (byte)segment4.Value;
+            segment4label.Text = segment4.Value.ToString();
+            updateNonLinearColors(3);
+            updateNonLinearColors(4);
+            UpdateNonLinearBrightness();
         }
 
         private void segment5_Change(object sender, EventArgs e)
         {
             segmentValues[5] = (byte)segment5.Value;
+            segment5label.Text = segment5.Value.ToString();
+            updateNonLinearColors(4);
+            updateNonLinearColors(5);
+            UpdateNonLinearBrightness();
         }
 
         private void segment6_Change(object sender, EventArgs e)
         {
             segmentValues[6] = (byte)segment6.Value;
+            segment6label.Text = segment6.Value.ToString();
+            updateNonLinearColors(5);
+            updateNonLinearColors(6);
+            UpdateNonLinearBrightness();
         }
 
         private void segment7_Change(object sender, EventArgs e)
         {
             segmentValues[7] = (byte)segment7.Value;
+            segment7label.Text = segment7.Value.ToString();
+            updateNonLinearColors(6);
+            updateNonLinearColors(7);
+            UpdateNonLinearBrightness();
         }
 
         private void segment8_Change(object sender, EventArgs e)
         {
             segmentValues[8] = (byte)segment8.Value;
+            segment8label.Text = segment8.Value.ToString();
+            updateNonLinearColors(7);
+            UpdateNonLinearBrightness();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void UpdateNonLinearBrightness()
         {
 
-            Bitmap bitmap = new Bitmap(width, height);
-            byte[] newColors = createNonLinearColors();
-
-            for (int y = 0; y < height; y++)
+            if(displayBitmap != null)
             {
-                for (int x = 0; x < width; x++)
+                Bitmap bitmap = new Bitmap(width, height);
+
+                for (int y = 0; y < height; y++)
                 {
+                    for (int x = 0; x < width; x++)
+                    {
 
-                    byte pixelValue = newColors[(imageArray[y, x])];
+                        byte pixelValue = newColors[(imageArray[y, x])];
 
-                    bitmap.SetPixel(x, y, colorsArray[pixelValue]);
+                        bitmap.SetPixel(x, y, colorsArray[pixelValue]);
+                    }
                 }
+
+                displayBitmap = bitmap;
+                mainPicturebox.Image = displayBitmap;
+                mainPicturebox.Size = new Size(width, height);
             }
 
-            displayBitmap = bitmap;
 
-            mainPicturebox.Image = displayBitmap;
-            mainPicturebox.Size = new Size(width, height);
+
 
             chart1.Series["Brightness"].Points.Clear();
 
@@ -625,6 +658,8 @@ namespace UsersGraphics
         {
             zoomPanel.Visible = true;
             brightnessNonLinearPanel.Visible = false;
+            isZoom = true;
+
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -636,6 +671,20 @@ namespace UsersGraphics
         {
             zoomPanel.Visible = false;
             brightnessNonLinearPanel.Visible = true;
+            isZoom = false;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void segment0_Scroll(object sender, EventArgs e)
+        {
+            segmentValues[0] = (byte)segment0.Value;
+            segment0label.Text = segment0.Value.ToString();
+            updateNonLinearColors(0);
+            UpdateNonLinearBrightness();
         }
 
         private void labelColor_Click(object sender, EventArgs e)
